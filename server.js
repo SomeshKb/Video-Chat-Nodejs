@@ -8,6 +8,13 @@ const io = require("socket.io")(server, {
     origin: '*'
   }
 });
+const { ExpressPeerServer } = require("peer");
+const peerServer = ExpressPeerServer(server, {
+  debug: true,
+});
+
+app.use("/peerjs", peerServer);
+app.use(express.static("public"));
 
 app.get("/", (req, res) => {
   res.redirect(`/${uuidv4()}`);
